@@ -1,9 +1,9 @@
 const express = require('express');
 
-const db = require('./data/dbConfig.js');
-
 const server = express();
-
 server.use(express.json());
+
+const logger = require('./middleware/logger');
+server.use(logger);
 
 module.exports = server;
