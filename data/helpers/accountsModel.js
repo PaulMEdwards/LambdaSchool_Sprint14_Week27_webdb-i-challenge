@@ -7,10 +7,31 @@ module.exports = {
   remove,
 };
 
-function get(id) {};
+function get(id) {
+  if (id) {
+    return db("accounts")
+      .where("id", id)
+      .first();
+  } else {
+    return db("accounts");
+  }
+};
 
-function insert(account) {};
+function insert(account) {
+  return db("accounts")
+    .insert(account)
+    .then(([id]) => this.get(id));
+};
 
-function update(id, accountChanges) {};
+function update(id, accountChanges) {
+  return db("accounts")
+    .where("id", id)
+    .update(accountChanges)
+    .then(count => (count > 0 ? this.get(id) : null));
+};
 
-function remove(id) {};
+function remove(id) {
+  return db("accounts")
+    .where("id", id)
+    .del();
+};
