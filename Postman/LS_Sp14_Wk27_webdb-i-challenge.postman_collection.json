@@ -1,0 +1,1335 @@
+{
+	"info": {
+		"_postman_id": "d25f1405-f87b-452a-97b2-3d262442dc79",
+		"name": "LS_Sp14_Wk27_webdb-i-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "POST /api/accounts (missing name/budget)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b6bd3b5-3913-4ebd-937c-93f56dae29a5",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Failure', () => {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(res.success).to.equal(false);",
+									"});",
+									"",
+									"pm.test('Data Size', () => {",
+									"    pm.expect(res.account).to.be.undefined;",
+									"});",
+									"",
+									"pm.test('Data Value(s)', () => {",
+									"    pm.expect(res.errorMessage).to.equal(\"Missing required name and/or budget field(s)!\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "POST /api/accounts (missing name/budget)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "80"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"50-kXbYToLin2hMDCpKbJuEY0RvozU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:01:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"errorMessage\": \"Missing required name and/or budget field(s)!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "POST /api/accounts (valid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "84d20fc1-f559-4506-8cda-8c9c242e8369",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Success', () => {",
+									"    pm.response.to.have.status(201);",
+									"    pm.expect(res.success).to.equal(true);",
+									"});",
+									"",
+									"pm.test('Data Value(s)', () => {",
+									"    pm.expect(res.account.id).to.be.at.least(1);",
+									"});",
+									"",
+									"//Store generated account ID for reuse in subsequent tests",
+									"var aid = res.account.id;",
+									"pm.collectionVariables.set(\"AccountID\", aid);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Test Account\",\n\t\"budget\": 100000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "POST /api/accounts (valid)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Test Account\",\n\t\"budget\": 100000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"49-Iyl6JKnHC7q+16FGHZAWFKgm3DM\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:01:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"account\": {\n        \"id\": 1,\n        \"name\": \"Test Account\",\n        \"budget\": 100000\n    }\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "GET /api/accounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0f3c8ca-fcc2-4eb5-a6c9-b6e40e6eba58",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Success', () => {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(res.success).to.equal(true);",
+									"});",
+									"",
+									"pm.test('Data Size', () => {",
+									"    pm.expect(res.accounts.length).to.be.at.least(1);",
+									"});",
+									"",
+									"pm.test('Data Value(s)', () => {",
+									"    pm.expect(res.accounts[0].name).to.equal(\"Test Account\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET /api/projects",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4c-+54YkszzA9AqAXcvqePCXxqVW2Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:02:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"accounts\": [\n        {\n            \"id\": 1,\n            \"name\": \"Test Account\",\n            \"budget\": 100000\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "GET /api/accounts/:id (not found)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "133dafd8-cfda-4da0-9b8a-3190d8c83402",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Failure', () => {",
+									"    pm.response.to.have.status(404);",
+									"    pm.expect(res.success).to.equal(false);",
+									"});",
+									"",
+									"pm.test('Data Size', () => {",
+									"    pm.expect(res.account).to.be.undefined;",
+									"});",
+									"",
+									"pm.test('Error Message', () => {",
+									"    pm.expect(res.errorMessage).to.equal(\"The account with the specified ID does not exist.\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts/999",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"999"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET /api/projects/:id (not found)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts/999",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"999"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"54-SkSIp/j7TZ+sAaAussanMz3m3a0\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:07:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"errorMessage\": \"The account with the specified ID does not exist.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "GET /api/accounts/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a935735f-f00c-49cb-b097-afdfcc2f6613",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Success', () => {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(res.success).to.equal(true);",
+									"});",
+									"",
+									"pm.test('Data Value(s)', () => {",
+									"    pm.expect(res.account.name).to.equal(\"Test Account\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts/{{AccountID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"{{AccountID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET /api/projects/:id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts/{{AccountID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"{{AccountID}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"49-Iyl6JKnHC7q+16FGHZAWFKgm3DM\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:08:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"account\": {\n        \"id\": 1,\n        \"name\": \"Test Account\",\n        \"budget\": 100000\n    }\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "PUT /api/accounts/:id (not found)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b849a9d-5d2f-4e2e-8525-e98fabc2ebd1",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Status: 404 Not Found', () => {",
+									"    pm.response.to.have.status(404);",
+									"    pm.expect(pm.response.status).to.equal(\"Not Found\");",
+									"});",
+									"",
+									"pm.test(\"Does not exist\", () => {",
+									"    pm.expect(pm.response.text()).to.include(\"The account with the specified ID does not exist.\");",
+									"});",
+									"",
+									"pm.test('Success=false', () => {",
+									"    pm.expect(res.success).to.be.false;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Test Account Updated\",\n\t\"budget\": 200000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts/999",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"999"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT /api/accounts/:id (not found)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Test Account Updated\",\n\t\"budget\": 200000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts/999",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"999"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"54-SkSIp/j7TZ+sAaAussanMz3m3a0\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:18:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"errorMessage\": \"The account with the specified ID does not exist.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "PUT /api/accounts/:id (missing name/budget)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "afa213a4-8aad-44b4-baa1-50a06be4fe81",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Status: 400 Bad Request', () => {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.equal(\"Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Does not exist\", () => {",
+									"    pm.expect(pm.response.text()).to.include(\"Please provide name and budget for the account.\");",
+									"});",
+									"",
+									"pm.test('Success=false', () => {",
+									"    pm.expect(res.success).to.be.false;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts/{{AccountID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"{{AccountID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT /api/accounts/:id (missing name/budget)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts/{{AccountID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"{{AccountID}}"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "82"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"52-e5hQzCNfQPHBbRFRrcX3l6CsEdI\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:20:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"errorMessage\": \"Please provide name and budget for the account.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "PUT /api/accounts/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ba7c0b18-8c9b-4035-a568-56f7abaf3129",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Success', () => {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(res.success).to.equal(true);",
+									"});",
+									"",
+									"pm.test('Data Value(s)', () => {",
+									"    pm.expect(res.accountIdUpdated).to.equal(pm.collectionVariables.get('AccountID'));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Test Account Updated\",\n\t\"budget\": 200000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts/{{AccountID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"{{AccountID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT /api/accounts/:id",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Test Account Updated\",\n\t\"budget\": 200000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts/{{AccountID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"{{AccountID}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-L5Pw5CIlPfu8hZS/mX4Yxjfm0JA\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:21:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"accountIdUpdated\": 1\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "DELETE /api/accounts/:id (not found)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a76ad4c8-5756-43a8-a71d-98c639ad7158",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Status: 404 Not Found', () => {",
+									"    pm.response.to.have.status(404);",
+									"    pm.expect(pm.response.status).to.equal(\"Not Found\");",
+									"});",
+									"",
+									"pm.test(\"Does not exist\", () => {",
+									"    pm.expect(pm.response.text()).to.include(\"The account with the specified ID does not exist.\");",
+									"});",
+									"",
+									"pm.test('Success=false', () => {",
+									"    pm.expect(res.success).to.be.false;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts/999",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"999"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE /api/accounts/:id (not found)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts/999",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"999"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"54-SkSIp/j7TZ+sAaAussanMz3m3a0\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:33:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"errorMessage\": \"The account with the specified ID does not exist.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE /api/accounts/:id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9412206e-ff39-4881-a557-4eb1e3307710",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff5472e0-ad9e-406b-84d4-0b1cd9ac8bec",
+								"exec": [
+									"var res = pm.response.json();",
+									"",
+									"pm.test('Success', () => {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(res.success).to.equal(true);",
+									"});",
+									"",
+									"pm.test('Data Value(s)', () => {",
+									"    pm.expect(res.accountIdRemoved).to.equal(pm.collectionVariables.get('AccountID'));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/accounts/{{AccountID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"{{AccountID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE /api/accounts/:id",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/accounts/{{AccountID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"{{AccountID}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-2Cp2UjaQtrO+0WparnfLk750qT4\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 29 Jan 2020 04:34:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"accountIdRemoved\": 1\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "81005885-9980-4e6e-b9bf-0043d8f3b03c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d4f0b23e-bbbf-4e4e-9654-506bc8e3d5e8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "5a6bb4e2-0a55-4ea8-be6d-caaa819843b8",
+			"key": "AccountID",
+			"value": 1,
+			"type": "number"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
